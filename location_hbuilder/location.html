@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+   <title></title>
+   <link rel="stylesheet" href="css/bootstrap.css" />
+</head>
+<style type="text/css">  
+ html{
+	 height:100%
+	}  
+ body{
+	 height:100%;
+     margin:0px;
+     padding:0px
+     } 
+ .top{
+      	position: relative;
+     }
+ #container{
+ 	   background: red;
+	   height:27em;
+      }  
+.search{
+   	    position: absolute;
+   	    top: 1%;
+   	    left: 5%;
+        width: 90%;
+	   	height: 3em;
+	   	opacity: 0.6;
+    }
+.search input{
+	    background-color: white;
+	   	width: 100%;
+	   	height: 100%;
+	   	padding-left: 40px;
+	   }
+.search img{
+	position: absolute;
+	top: 1%;
+   	left: 4%;
+}  
+.music{
+	 position: absolute;
+	 right: 5%;
+	 top: 26em;
+}   
+.music:hover{
+	cursor: pointer;
+}
+.user div:nth-child(1){
+	 position: absolute;
+	 top: 29em;
+	 left: 5%;
+	 width: 5em;
+	 height: 5em;
+	 border-radius: 2.5em;
+	 overflow: hidden;
+}
+.user div:nth-child(1) img{
+	width: 100%;
+	height: 100%;
+}
+.user span{
+	position: absolute;
+	 top: 31em;
+	 left: 27%;
+	 color: gray;
+	 font-family: arial;
+}
+.userlocation{
+	position: absolute;
+	top: 35em;
+	left: 8%;
+	width: 80%;
+}
+.userlocation div:nth-child(1),
+.userlocation div:nth-child(2){
+	display: flex;
+	flex-direction: row;
+	justify-content:flex-start;
+	align-items: center;
+	margin-top: 10px;
+}
+.userlocation div:nth-child(1) div{
+	 width: 0.6em;
+	 height: 0.6em;
+	 border-radius: 0.3em;
+	 background: cornflowerblue;
+	 margin-right:1em ;
+}
+.userlocation div:nth-child(2) div{
+	 width: 0.6em;
+	 height: 0.6em;
+	 border-radius: 0.3em;
+	 background: indianred;
+	 margin-right:1em ;
+}
+.userlocation div:nth-child(1) input,
+.userlocation div:nth-child(2) input{
+    border-left:none;
+    border-right:none;
+    border-top:none;
+    border-bottom:1px solid darkgrey;
+    width: 90%;
+	
+}
+      
+</style>  
+
+<body>
+	 
+	<div class="top">
+	 <div id="container">
+      </div> 
+	<div class="search">
+		<input type="text" class="form-control" id="addr" placeholder="">
+        </input>
+        <img src="img/6.png" />
+	</div>
+	</div>
+	<div class="music">
+		<img src="img/duomi.png" />
+	</div>
+	<div class="user">
+		<div><img src="img/touxiang.jpg"/></div>
+	    <span>ASUKA LANGLAY SORYU</span>
+	</div>
+	<div class="userlocation">
+		<div>
+			<div ></div>
+			<input type="text" class="location" placeholder="LOACTION                    ADDR"/>
+		</div>
+		<div>
+			<div></div>
+			<input type="text"  class="city" placeholder="CITY                              ADDR"/>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=sV3SXHM6kHSGB1gIPC3WE1ib8GmRkO6r">
+</script>
+<script type="text/javascript" src="js/jquery-3.1.1.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	window.addEventListener("load", getposition, false);
+	function getposition(event) {
+		if (navigator.geolocation) {
+         	navigator.geolocation.getCurrentPosition(OnSuccessLocation);
+        } 
+	}
+	
+	function OnSuccessLocation(position) {			
+		var x = position.coords.longitude;
+		var y = position.coords.latitude;
+        var map = new BMap.Map("container");              
+		var point = new BMap.Point(x,y);   
+		map.centerAndZoom(point, 15);                      
+		var traffic = new BMap.TrafficLayer();          
+		map.addTileLayer(traffic);   
+		alert("成功")
+		var cityObj = new BMap.LocalCity();
+		cityObj.get(function(r)
+		{
+			 window.city=r.name;
+			 alert(window.city);
+		});
+		alert(window.city);
+		$(".location").val("longitude:"+x+",latitude"+y);
+		$(".city").val(window.city);
+		//map.removeTileLayer(traffic);    
+
+	}
+	$("#addr").click(function(){
+		
+	})
+	
+</script>
